@@ -22,6 +22,9 @@ interface {{ .Service | phpServiceName .File }}
      *
      * @throws \Twirp\Error
      */
-    public function {{ $method.Desc.Name }}(array $ctx, {{ $inputType }} $req): {{ $method.Output | phpMessageName $.File }};
+    public function {{ $method.Desc.Name }}(
+        array $ctx,
+        {{ $inputType }} $req
+    ): {{ $method.Output | phpMessageName $.File }} | \NeoTwirp{{ $method.Output | phpMessageName $.File }};
 {{ end -}}
 }

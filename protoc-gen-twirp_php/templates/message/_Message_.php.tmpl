@@ -1,0 +1,30 @@
+<?php
+
+declare(strict_types=1);
+
+namespace NeoTwirp\{{ .File | phpNamespace }};
+
+final class {{ .Message.Desc.Name }} implements
+    \JsonSerializable
+{
+    public function __construct(
+        {{- range $field := .Message.Fields }}
+        public ?{{ $field.Desc.Kind }} ${{ $field.Desc.TextName }} = null,
+        {{ end -}}
+    ) {}
+
+    public function jsonSerialize(): array
+    {
+        return array_filter(
+            (array)$this,
+        );
+    }
+
+    public function serializeToJsonString(): string
+    {
+        return json_encode(
+            $this->jsonSerialize(),
+            flags: JSON_UNESCAPED_UNICODE,
+        );
+    }
+}
